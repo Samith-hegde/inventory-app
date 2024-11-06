@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+
+<body>
+    <h1><%= title %></h1>
+    <form action="/games" method="post">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="<%= edit ? game.name : '' %>" required>
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" placeholder="<%= edit ? game.description : '' %>"  required>
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" placeholder="<%= edit ? game.price : '' %>"  required>
+        
+        <label for="developer">Developer</label>
+        <select name="developer" id="developer" required>
+            <option value="">--Choose a developer--</option>
+            <% developers.forEach(function(developer) { %>
+                <option value="<%= developer.id %>"><%= developer.name %></option>
+            <% }); %>
+        </select>
+        <button type="submit">Add game</button>
+    </form>
+</body>
+</html>

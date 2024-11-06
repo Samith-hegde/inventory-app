@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+
+<body>
+    <ul>
+        <% games.forEach(function(game)) { %>
+            <li>
+                <strong> <%= game.name %> </strong>
+                <p> <%= game.description %> </p>
+                <p> <% game.genres.forEach(function(genre)) { %> </p>
+                    <p> <%= genre.name %> </p>
+                    <% }) %> 
+                <p> <%= game.developer %> </p>
+                <p> <%= game.price %> </p>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html> 
