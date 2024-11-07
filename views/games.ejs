@@ -6,17 +6,19 @@
 
 <body>
     <ul>
-        <% games.forEach(function(game)) { %>
+        <% games.forEach(function(game) { %>
             <li>
                 <strong> <%= game.name %> </strong>
                 <p> <%= game.description %> </p>
-                <p> <% game.genres.forEach(function(genre)) { %> </p>
-                    <p> <%= genre.name %> </p>
-                    <% }) %> 
-                <p> <%= game.developer %> </p>
-                <p> <%= game.price %> </p>
+                <p> Genres:
+                    <% game.genres.forEach(function(genre, index) { %>
+                        <%= genre.name %><%= index < game.genres.length - 1 ? ',' : '' %>
+                    <% }); %>
+                </p> 
+                <p> Developer: <%= game.developer.name %> </p>
+                <p> Price: <%= game.price %> </p>
             </li>
-        <% }) %>
+        <% }); %>
     </ul>
 </body>
 </html> 

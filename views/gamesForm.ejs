@@ -13,15 +13,49 @@
         <input type="text" id="description" name="description" placeholder="<%= edit ? game.description : '' %>"  required>
         <label for="price">Price</label>
         <input type="number" id="price" name="price" placeholder="<%= edit ? game.price : '' %>"  required>
-        
+        <label for="genre1">Genre:</label>
+        <input type="text" id="genre1" name="genres[]" placeholder="Enter a genre" required>
         <label for="developer">Developer</label>
         <select name="developer" id="developer" required>
-            <option value="">--Choose a developer--</option>
+            <option value=""> <%= edit ? game.developer : 'Choose a developer' %> </option>
             <% developers.forEach(function(developer) { %>
                 <option value="<%= developer.id %>"><%= developer.name %></option>
             <% }); %>
         </select>
         <button type="submit">Add game</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const genreFields = document.getElementById('genreFields');
+        let fieldCount = 1;
+
+        function addNewField() {
+            fieldCount++;
+            const newField = document.createElement('div');
+            newField.className = 'genre-field';
+            newField.innerHTML = `
+                <label for="genre${fieldCount}">Genre:</label>
+                <input type="text" id="genre${fieldCount}" name="genres[]" placeholder="Enter a genre">
+            `;
+            genreFields.appendChild(newField);
+
+            // Add event listener to the new field
+            newField.querySelector('input').addEventListener('input', checkLastField);
+        }
+
+        function checkLastField() {
+            const fields = document.querySelectorAll('.genre-field input');
+            const lastField = fields[fields.length - 1];
+            
+            if (lastField.value.trim() !== '' && lastField === this) {
+                addNewField();
+            }
+        }
+
+        // Add event listener to the initial field
+        document.getElementById('genre1').addEventListener('input', checkLastField);
+      });
+    </script>
 </body>
 </html>

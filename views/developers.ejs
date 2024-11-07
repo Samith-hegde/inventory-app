@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+
+  <body>
+    <h1> <%= title %> </h1>
+    <ul>
+        <% developers.forEach(function(developer) { %>
+            <li>
+                <strong> <%= developer.name %> </strong>
+                <p> Founded in: <%= developer.founded %> </p>
+                <p> Location: <%= developer.location %> </p>
+            </li>
+        <% }); %>
+    </ul>
+  </body>
+</html>
