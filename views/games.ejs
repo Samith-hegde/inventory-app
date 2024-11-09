@@ -12,10 +12,10 @@
                 <p> <%= game.description %> </p>
                 <p> Genres:
                     <% game.genres.forEach(function(genre, index) { %>
-                        <%= genre.name %><%= index < game.genres.length - 1 ? ',' : '' %>
+                        <%= genre %><%= index < game.genres.length - 1 ? ',' : '' %>
                     <% }); %>
                 </p> 
-                <p> Developer: <%= game.developer.name %> </p>
+                <p> Developer: <%= game.developer %> </p>
                 <p> Price: <%= game.price %> </p>
             </li>
         <% }); %>

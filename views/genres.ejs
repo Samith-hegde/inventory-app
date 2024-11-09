@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    
+    <body>
+        <h1> <%= title %> </h1>
+        <ul>
+            <% genres.forEach(function(genre) { %>
+                <li>
+                    <strong> <%= genre %> </strong>
+                </li>
+            <% }); %>
+        </ul>
+    </body>
+</html>
