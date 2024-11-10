@@ -12,7 +12,9 @@
                 <strong> <%= developer.name %> </strong>
                 <p> Founded in: <%= developer.founded %> </p>
                 <p> Location: <%= developer.location %> </p>
-            </li>
+                <a href="/developers/edit/<%= developer._id %>">Edit</a>
+                <a href="/developers/delete/<%= developer._id %>">Delete</a>
+              </li>
         <% }); %>
     </ul>
     <button onclick="window.location.href='/developers/add'">Add a new developer</button>

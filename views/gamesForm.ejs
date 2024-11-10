@@ -6,30 +6,59 @@
 
 <body>
     <h1><%= title %></h1>
-    <form action="/games/add" method="post">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="<%= edit ? game.name : '' %>" required>
-        <label for="description">Description</label>
-        <input type="text" id="description" name="description" placeholder="<%= edit ? game.description : '' %>"  required>
-        <label for="price">Price</label>
-        <input type="number" id="price" name="price" placeholder="<%= edit ? game.price : '' %>"  required>
-        <% if (edit) { %>
+    <% if (edit) { %>
+        <form action="/games/edit/<%= game.game_id %>" method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="<%= game.name %>" required>
+    
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" value="<%= game.description %>" required>
+    
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" value="<%= game.price %>" required>
+    
             <% game.genres.forEach(function(genre, index) { %>
                 <label for="genre<%= index + 1 %>">Genre:</label>
-                <input type="text" id="genre<%= index + 1 %>" name="genres[]" value="<%= genre %>" required>
+                <input type="text" id="genre<%= index + 1 %>" name="genres[]" value="<%= genre %>">
             <% }); %>
-        <% } %>
-        <label for="genre1">Genre:</label>
-        <input type="text" id="genre1" name="genres[]" placeholder="Enter a genre" required>
-        <label for="developer">Developer</label>
-        <select name="developer" id="developer" required>
-            <option value=""> <%= edit ? game.developer : 'Choose a developer' %> </option>
-            <% developers.forEach(function(developer) { %>
-                <option value="<%= developer.name %>"><%= developer.name %></option>
-            <% }); %>
-        </select>
-        <button type="submit">Add game</button>
-    </form>
+            <label for="genre<%= game.genres.length + 1 %>">Genre:</label>
+            <input type="text" id="genre<%= game.genres.length + 1 %>" name="genres[]" placeholder="Enter a genre">
+    
+            <label for="developer">Developer</label>
+            <select name="developer" id="developer" required>
+                <option value="<%= game.developer %>"><%= game.developer %></option>
+                <% developers.forEach(function(developer) { %>
+                    <% if (developer.name !== game.developer) { %>
+                        <option value="<%= developer.name %>"><%= developer.name %></option>
+                    <% } %>
+                <% }); %>
+            </select>
+            <button type="submit">Update game</button>
+        </form>
+    <% } else { %>
+        <form action="/games/add" method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" required>
+    
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" required>
+    
+            <label for="genre1">Genre:</label>
+            <input type="text" id="genre1" name="genres[]" placeholder="Enter a genre" required>
+    
+            <label for="developer">Developer</label>
+            <select name="developer" id="developer" required>
+                <option value="">Choose a developer</option>
+                <% developers.forEach(function(developer) { %>
+                    <option value="<%= developer.name %>"><%= developer.name %></option>
+                <% }); %>
+            </select>
+            <button type="submit">Add game</button>
+        </form>
+    <% } %>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -42,7 +71,7 @@
             newField.className = 'genre-field';
             newField.innerHTML = `
                 <label for="genre${fieldCount}">Genre:</label>
-                <input type="text" id="genre${fieldCount}" name="genres[]" placeholder="Enter a genre">
+                <input type="text" id="genre${fieldCount}" name="genres[]" value="Enter a genre">
             `;
             genreFields.appendChild(newField);
 

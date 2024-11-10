@@ -26,7 +26,12 @@ async function getAllGames() {
 }
 
 async function getGame(id) {
-    const query = 'SELECT * FROM game WHERE id = $1';
+    const query = `
+    SELECT gm.*, dv.name as developer, array_agg(DISTINCT gn.genre) AS genres
+    FROM game gm JOIN developer dv ON gm.developer_id = dv.developer_id
+    JOIN genre gn ON gm.game_id = gn.game_id
+    WHERE gm.game_id = $1
+    GROUP BY gm.game_id, dv.name`;
     const { rows } = await pool.query(query, [id]);
     return rows[0];
 }
@@ -51,8 +56,17 @@ async function addGame(gameDetails) {
 async function updateGame(id, gameDetails) {
     const selectedDeveloper = gameDetails.developer;
     const developerID = await getDeveloperID(selectedDeveloper);
-    const query = 'UPDATE game SET name = $2, developer_id = $3, price = $4, description = $5 WHERE id = $1';
-    await pool.query(query, [id, gameDetails.name, developerID, gameDetails.price, gameDetails.description]);
+
+    const query_game = 'UPDATE game SET name = $2, developer_id = $3, price = $4, description = $5 WHERE game_id = $1';
+    await pool.query(query_game, [id, gameDetails.name, developerID, gameDetails.price, gameDetails.description]);
+
+    const query_genre_delete = 'DELETE FROM genre WHERE game_id = $1';
+    await pool.query(query_genre_delete, [id]);
+
+    const query_genre = 'INSERT INTO genre (game_id, genre) VALUES ($1, $2)';
+    gameDetails.genres.forEach(async genre => {
+        await pool.query(query_genre, [id, genre]);
+    });
 }
 
 async function deleteGame(id) {
