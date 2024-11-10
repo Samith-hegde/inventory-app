@@ -6,7 +6,7 @@
 
 <body>
     <h1><%= title %></h1>
-    <form action="/games" method="post">
+    <form action="/games/add" method="post">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" placeholder="<%= edit ? game.name : '' %>" required>
         <label for="description">Description</label>
@@ -18,13 +18,14 @@
                 <label for="genre<%= index + 1 %>">Genre:</label>
                 <input type="text" id="genre<%= index + 1 %>" name="genres[]" value="<%= genre %>" required>
             <% }); %>
+        <% } %>
         <label for="genre1">Genre:</label>
         <input type="text" id="genre1" name="genres[]" placeholder="Enter a genre" required>
         <label for="developer">Developer</label>
         <select name="developer" id="developer" required>
             <option value=""> <%= edit ? game.developer : 'Choose a developer' %> </option>
             <% developers.forEach(function(developer) { %>
-                <option value="<%= developer.id %>"><%= developer.name %></option>
+                <option value="<%= developer.name %>"><%= developer.name %></option>
             <% }); %>
         </select>
         <button type="submit">Add game</button>

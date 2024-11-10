@@ -5,6 +5,7 @@
   </head>
 
 <body>
+    <h1> <%= title %> </h1>
     <ul>
         <% games.forEach(function(game) { %>
             <li>
@@ -20,5 +21,6 @@
             </li>
         <% }); %>
     </ul>
+    <button onclick="window.location.href='/games/add'">Add a new game</button>
 </body>
 </html> 

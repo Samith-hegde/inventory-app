@@ -7,9 +7,9 @@
     <body>
         <h1> <%= title %> </h1>
         <ul>
-            <% genres.forEach(function(genre) { %>
+            <% genres.forEach(function(genreObj) { %>
                 <li>
-                    <strong> <%= genre %> </strong>
+                    <strong> <%= genreObj.genre %> </strong>
                 </li>
             <% }); %>
         </ul>
