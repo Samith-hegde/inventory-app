@@ -20,7 +20,9 @@
                 <p> Developer: <%= game.developer %> </p>
                 <p> Price: <%= game.price %> </p>
                 <a href="/games/edit/<%= game.game_id %>">Edit</a>
-                <a href="/games/delete/<%= game.game_id %>">Delete</a>
+                <form action="/games/delete/<%= game.game_id %>" method="POST" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>                
             </li>
         <% }); %>
     </ul>

@@ -13,10 +13,33 @@
                 <p> Founded in: <%= developer.founded %> </p>
                 <p> Location: <%= developer.location %> </p>
                 <a href="/developers/edit/<%= developer._id %>">Edit</a>
-                <a href="/developers/delete/<%= developer._id %>">Delete</a>
+                <form id="deleteForm" action="/developers/delete/<%= developer.developer_id %>" method="POST" style="display: inline;">
+                    <button type="button" onclick="showConfirmationModal()">Delete</button>
               </li>
         <% }); %>
     </ul>
     <button onclick="window.location.href='/developers/add'">Add a new developer</button>
+
+    <div id="confirmationModal" style="display: none;">
+        <div>
+            <p>Deleting this developer will delete all their games in the inventory. Are you sure you want to delete this developer?</p>
+            <button type="button" onclick="deleteDeveloper()">Yes</button>
+            <button type="button" onclick="hideConfirmationModal()">No</button>
+        </div>
+    </div>
+
+    <script>
+        function showConfirmationModal() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function hideConfirmationModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        function deleteDeveloper() {
+            document.getElementById('deleteForm').submit();
+        }
+    </script>
   </body>
 </html>

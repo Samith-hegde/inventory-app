@@ -70,8 +70,10 @@ async function updateGame(id, gameDetails) {
 }
 
 async function deleteGame(id) {
-    const query = 'DELETE FROM game WHERE id = $1';
-    await pool.query(query, [id]);
+    const query_genre = 'DELETE FROM genre WHERE game_id = $1';
+    await pool.query(query_genre, [id]);
+    const query_game = 'DELETE FROM game WHERE game_id = $1';
+    await pool.query(query_game, [id]);
 }
 
 async function getAllGenres() {
@@ -87,7 +89,7 @@ async function getAllDevelopers() {
 }
 
 async function getDeveloper(id) {
-    const query = 'SELECT * FROM developer WHERE id = $1';
+    const query = 'SELECT * FROM developer WHERE developer_id = $1';
     const { rows } = await pool.query(query, [id]);
     return rows[0];
 }
@@ -104,13 +106,24 @@ async function addDeveloper(developerDetails) {
 }
 
 async function updateDeveloper(id, developerDetails) {
-    const query = 'UPDATE developer SET name = $2, founded = $3, location = $4 WHERE id = $1';
+    const query = 'UPDATE developer SET name = $2, founded = $3, location = $4 WHERE developer_id = $1';
     await pool.query(query, [id, developerDetails.name, developerDetails.founded, developerDetails.location]);
 }
 
 async function deleteDeveloper(id) {
-    const query = 'DELETE FROM developer WHERE id = $1';
-    await pool.query(query, [id]);
+    const query_get_games = 'SELECT game_id FROM game WHERE developer_id = $1';
+    const { rows } = await pool.query(query_get_games, [id]);
+
+    const query_genre = 'DELETE FROM genre WHERE game_id = $1';
+    rows.forEach(async row => {
+        await pool.query(query_genre, [row.game_id]);
+    });
+
+    const query_game = 'DELETE FROM game WHERE developer_id = $1';
+    await pool.query(query_game, [id]);
+
+    const query_developer = 'DELETE FROM developer WHERE developer_id = $1';
+    await pool.query(query_developer, [id]);
 }
 
 module.exports = {
