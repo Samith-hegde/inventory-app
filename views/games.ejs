@@ -12,11 +12,7 @@
                 <strong> <%= game.name %> </strong>
                 <p> <%= game.description %> </p>
                 <% console.log(game.genres); %>
-                <p> Genres:
-                    <% game.genres.forEach(function(genre, index) { %>
-                        <%= genre %><%= index < game.genres.length - 1 ? ',' : '' %>
-                    <% }); %>
-                </p> 
+                <p> Genres: <%= game.genres.join(', ') %> </p>
                 <p> Developer: <%= game.developer %> </p>
                 <p> Price: <%= game.price %> </p>
                 <a href="/games/edit/<%= game.game_id %>">Edit</a>
@@ -27,5 +23,7 @@
         <% }); %>
     </ul>
     <button onclick="window.location.href='/games/add'">Add a new game</button>
+
+    <button type="button" onclick="window.location.href='/'">Back to home</button>
 </body>
 </html> 

@@ -12,13 +12,13 @@
                 <strong> <%= developer.name %> </strong>
                 <p> Founded in: <%= developer.founded %> </p>
                 <p> Location: <%= developer.location %> </p>
-                <a href="/developers/edit/<%= developer._id %>">Edit</a>
+                <a href="/developers/edit/<%= developer.developer_id %>">Edit</a>
                 <form id="deleteForm" action="/developers/delete/<%= developer.developer_id %>" method="POST" style="display: inline;">
                     <button type="button" onclick="showConfirmationModal()">Delete</button>
               </li>
         <% }); %>
     </ul>
-    <button onclick="window.location.href='/developers/add'">Add a new developer</button>
+    <button type="button" onclick="window.location.href='/developers/add'">Add a new developer</button>
 
     <div id="confirmationModal" style="display: none;">
         <div>
@@ -27,6 +27,8 @@
             <button type="button" onclick="hideConfirmationModal()">No</button>
         </div>
     </div>
+
+    <button type="button" onclick="window.location.href='/'">Back to home</button>
 
     <script>
         function showConfirmationModal() {

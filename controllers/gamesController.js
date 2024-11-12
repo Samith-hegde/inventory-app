@@ -25,7 +25,17 @@ async function getEditGame(req, res) {
 
 async function postEditGame(req, res) {
     const id = req.params.id;
-    const gameDetails = req.body;
+    const { name, description, price, genres, developer } = req.body;
+
+    const filteredGenres = genres.filter(genre => genre.trim() !== '');
+    const gameDetails = {
+        name,
+        description,
+        price,
+        genres: filteredGenres,
+        developer
+    };
+
     await db.updateGame(id, gameDetails);
     res.redirect('/games');
 }

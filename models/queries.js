@@ -22,7 +22,7 @@ async function getAllGames() {
     return allGames;
   } catch (error) {
     console.error('Error fetching games:', error);
-  }
+  }  
 }
 
 async function getGame(id) {

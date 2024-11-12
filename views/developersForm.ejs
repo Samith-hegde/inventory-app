@@ -6,15 +6,29 @@
 
 <body>
     <h1> <%= title %> </h1>
-    <form action="/developers/add" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="founded">Founded:</label>
-        <input type="text" id="founded" name="founded" required>
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required>
-        <button type="submit">Add Developer</button>
-    </form>
+    <% if (!edit) { %>
+        <form action="/developers/add" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="founded">Founded:</label>
+            <input type="text" id="founded" name="founded" required>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            <button type="submit">Add Developer</button>
+        </form>
+    <% } else { %>
+        <form action="/developers/edit/<%= developer.developer_id %>" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= developer.name %>" required>
+            <label for="founded">Founded:</label>
+            <input type="text" id="founded" name="founded" value="<%= developer.founded %>" required>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="<%= developer.location %>" required>
+            <button type="submit">Update Developer</button>
+        </form>
+    <% } %>
+
+    <button type="button" onclick="window.location.href='/developers'">Back to developers</button>
 </body>
 
 </html>
